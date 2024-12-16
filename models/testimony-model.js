@@ -14,4 +14,4 @@ const testimonySchema = new Schema({
 
 testimonySchema.plugin(toJSON);
 
-export const testimonyModel = model('testimony', testimonySchema);
+export const TestimonyModel = model('testimony', testimonySchema);

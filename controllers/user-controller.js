@@ -1,24 +1,25 @@
-import userModel from "../models/usermodel.js";
-import bcrypt from "bcrypt.js";
+import { UserModel } from "../models/user-model.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { mailTransporter } from "../utils/mail.js";
-import { userRegisterValidator, userLoginValidator } from "../validators/uservalidator.js";
+import { userRegisterValidator, userLoginValidator } from "../validators/user-validator.js";
 
-export const userRegister = async (req, res, next) => {
+// User register
+export const registerUser = async (req, res, next) => {
     try {
-        // checking if inputed details are correct
+        // Validate user input
         const { error, value } = userRegisterValidator.validate(req.body);
         if (error) {
             res.status(422).json(error);
         }
         // check the database if the email exist already
-        const user = await userModel.findOne({ email: value.email });
+        const user = await UserModel.findOne({ email: value.email });
         if (user) {
-            res.status(200).json("user already exist");
+            res.status(200).json("User already exists");
         }
         const hashedpassword = bcrypt.hashSync(value.password, 10);
         // save to database
-        await userModel.create({
+        await UserModel.create({
             ...value,
             password: hashedpassword
         });
@@ -96,26 +97,34 @@ export const userRegister = async (req, res, next) => {
     }
 }
 
-export const userLogin = async (req, res, next) => {
+// User login
+export const loginUser = async (req, res, next) => {
     try {
-        // validate the person credentials
-        const { error, value } = userLoginValidator.validate(req.body);
-        if (error) {
-            res.status(422).json(error);
-        }
-        // check for validity of password
-        const correctpassword = bcrypt.compare(value.password, user.password);
-        if (!correctpassword) {
-            res.status(404).json("Invalid Credentials");
-        }
-        // now generate a token for the person
-        const token = jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY, {
-            expiresIn: "999999999999999999999999h",
-        });
-        res.json({
-            message: "user logged in", accessToken: token,
-        });
+      // Validate user input
+      const { error, value } = userLoginValidator.validate(req.body);
+      if (error) {
+        return res.status(422).json(error);
+      }
+      // Find one user with identifier
+      const user = await UserModel.findOne({ email: value.email });
+      if (!user) {
+        return res.status(404).json("User does not exist!");
+      }
+      // Compare their passwords
+      const correctPassword = bcrypt.compareSync(value.password, user.password);
+      if (!correctPassword) {
+        return res.status(401).json
+          ("Invalid credentials!");
+      }
+      // sigm a token for user
+      const token = jwt.sign(
+        { id: user.id }, process.env.JWT_PRIVATE_KEY, { expiresIn: "24h" }
+      );
+      // respond to resquest
+      res.json({ message: "User logged in!", accessToken: token })
+  
     } catch (error) {
-        next(error);
+      next(error);
     }
-}
+  }
+  
