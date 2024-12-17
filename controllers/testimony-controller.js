@@ -18,7 +18,7 @@ export const postTestimony = async (req, res, next) => {
             user: req.auth.id
         });
         // Respond to request
-        res.status(201).json("Charging station was added!");
+        res.status(201).json("Testimony was posted!");
     } catch (error) {
         next(error);
     }
