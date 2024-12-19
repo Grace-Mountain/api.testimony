@@ -21,6 +21,6 @@ app.use(userRouter);
 app.use(testimonyRouter);
 
 // Listen for inconming requests
-app.listen(3000, () => {
-    console.log('App listening on port 3000');  
+app.listen(7979, () => {
+    console.log('App listening on port 7979');  
 });
