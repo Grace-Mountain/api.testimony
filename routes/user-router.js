@@ -7,7 +7,7 @@ const userRouter = Router();
 // Define routes
 userRouter.post("/users/register", registerUser);
 
-userRouter.post("users/login", loginUser);
+userRouter.post("/users/login", loginUser);
 
 // Export the router
 export default userRouter;

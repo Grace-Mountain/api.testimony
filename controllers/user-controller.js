@@ -1,4 +1,4 @@
- import { UserModel } from "../models/user-model.js";
+import { UserModel } from "../models/user-model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { mailTransporter } from "../utils/mail.js";
@@ -91,7 +91,7 @@ export const registerUser = async (req, res, next) => {
 </body>
 </html>`,
         });
-        res.status(201).json("user registered successfully");
+        res.status(201).json("User registered successfully!");
     } catch (error) {
         next(error);
     }
