@@ -4,7 +4,7 @@ import { toJSON } from "@reis/mongoose-to-json";
 const testimonySchema = new Schema({
     content: { type: String, required: true },
     image: { type: String, required: false },
-    user: { type: Types.ObjectId, ref: 'User', required: true },
+    user: { type: Types.ObjectId, required: true, ref: "User" },
 },
 
     {
@@ -15,4 +15,4 @@ const testimonySchema = new Schema({
 
 testimonySchema.plugin(toJSON);
 
-export const TestimonyModel = model('Testimony', testimonySchema);
+export const TestimonyModel = model("Testimony", testimonySchema);
