@@ -1,10 +1,10 @@
 import { TestimonyModel } from "../models/testimony-model.js";
 import { postTestimonyValidator } from "../validators/testimony-validator.js";
 
-// post a testimony
+// Post a testimony
 export const postTestimony = async (req, res, next) => {
     try {
-        // Validate vendor inputs
+        // Validate user inputs
         const { error, value } = postTestimonyValidator.validate({
             ...req.body,
             image: req.file?.filename
@@ -12,7 +12,7 @@ export const postTestimony = async (req, res, next) => {
         if (error) {
             return res.status(422).json(error);
         }
-        // Write charging to database
+        // Write testimony to database
         await TestimonyModel.create({
             ...value,
             user: req.auth.id
@@ -77,7 +77,7 @@ export const getTestimonyById = async (req, res, next) => {
         if (!testimony) {
             return res.status(404).json("Testimony not found!");
         }
-        // Return Response
+        // Respond to request
         res.status(200).json(testimony);
     } catch (error) {
         next(error);

@@ -1,8 +1,8 @@
 export const permissions = [
-    {
+    /*{
         role: "member",
         actions: []
-    },
+    },*/
     {
         role: "admin",
         actions: [

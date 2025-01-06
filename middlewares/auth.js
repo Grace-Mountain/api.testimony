@@ -2,11 +2,13 @@ import { expressjwt } from "express-jwt";
 import { UserModel } from "../models/user-model.js";
 import { permissions } from "../utils/rbac.js";
 
+// Middleware to check if user is authenticated
 export const isAuthenticated = expressjwt({
   secret: process.env.JWT_PRIVATE_KEY,
   algorithms: ["HS256"],
 });
 
+// Middleware to check if user has permission
 export const hasPermission = (permission) => async (req, res, next) => {
   try {
     // Find user from database
@@ -22,7 +24,6 @@ export const hasPermission = (permission) => async (req, res, next) => {
     } else {
       res.status(403).json("Action not allowed!");
     }
-// Return a response
   } catch (error) {
     next(error);
   }

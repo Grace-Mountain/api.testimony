@@ -6,13 +6,11 @@ import { hasPermission, isAuthenticated } from "../middlewares/auth.js";
 const testimonyRouter = Router();
 
 // Define routes
-testimonyRouter.patch("/testimonies/:id", isAuthenticated, hasPermission("approve_testimony"), approveTestimony);
-
 testimonyRouter.post("/testimonies", isAuthenticated, postTestimony);
 
 testimonyRouter.get("/testimonies", isAuthenticated, getAllTestimonies);
 
-
+testimonyRouter.patch("/testimonies/:id", isAuthenticated, hasPermission("approve_testimony"), approveTestimony);
 
 testimonyRouter.delete("/testimonies/:id", isAuthenticated, hasPermission("delete_testimony"), deleteTestimony);
 

@@ -1,6 +1,7 @@
 import { Schema, Types, model } from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
+// Define testimony schema
 const testimonySchema = new Schema({
     content: { type: String, required: true },
     image: { type: String, required: false },
