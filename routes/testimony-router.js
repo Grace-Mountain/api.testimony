@@ -1,16 +1,20 @@
 import { Router } from "express";
-import { deleteTestimony, getAllTestimonies, postTestimony } from "../controllers/testimony-controller.js";
-import { isAuthenticated } from "../middlewares/auth.js";
+import { approveTestimony, deleteTestimony, getAllTestimonies, postTestimony } from "../controllers/testimony-controller.js";
+import { hasPermission, isAuthenticated } from "../middlewares/auth.js";
 
 // Create a router  
 const testimonyRouter = Router();
 
 // Define routes
-testimonyRouter.post("/testimony", isAuthenticated, postTestimony);
+testimonyRouter.patch("/testimonies/:id", isAuthenticated, hasPermission("approve_testimony"), approveTestimony);
 
-testimonyRouter.get("/testimony", isAuthenticated, getAllTestimonies);
+testimonyRouter.post("/testimonies", isAuthenticated, postTestimony);
 
-testimonyRouter.delete("/testimony/:id", isAuthenticated, deleteTestimony);
+testimonyRouter.get("/testimonies", isAuthenticated, getAllTestimonies);
+
+
+
+testimonyRouter.delete("/testimonies/:id", isAuthenticated, hasPermission("delete_testimony"), deleteTestimony);
 
 // Export the router
 export default testimonyRouter; 
