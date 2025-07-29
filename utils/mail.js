@@ -9,3 +9,4 @@ export const mailTransporter = createTransport({
         pass: process.env.PASSWORD,
     },
 });
+ 

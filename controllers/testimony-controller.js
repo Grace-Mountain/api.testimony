@@ -30,12 +30,32 @@ export const getAllTestimonies = async (req, res, next) => {
         const { filter = "{}", sort = "{}", limit = 50, skip = 0 } = req.query;
         // Fetch reservations from database 
         const testimonies = await TestimonyModel
-            .find(filter)
+            .find(JSON.parse(filter))
             .sort(JSON.parse(sort))
             .limit(limit)
             .skip(skip);
         // Return a response
         res.status(200).json(testimonies);
+    } catch (error) {
+        next(error);
+    }
+}
+
+// Get a testimony by ID
+export const getTestimonyById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const testimony = await TestimonyModel.findById(id);
+        if (!testimony) {
+            return res.status(404).json({
+                success: false,
+                message: 'Testimony not found.',
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: testimony,
+        });
     } catch (error) {
         next(error);
     }

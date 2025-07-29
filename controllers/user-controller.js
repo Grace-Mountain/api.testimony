@@ -68,23 +68,21 @@ export const registerUser = async (req, res, next) => {
         <div class="content">
             <p>Dear ${value.firstName},</p>
             
-            <p>Welcome to our blessed community! We're delighted to have you join Grace Mountain's testimony sharing platform. Your registration has been successfully completed.</p>
+            <p>We're delighted to have you join Grace Mountain's testimony sharing platform. Your registration has been successfully completed.</p>
 
             <p>Through this platform, you can:</p>
             <ul>
                 <li>Share your powerful testimonies from our prayer sessions</li>
-                <li>Connect with other members of the community</li>
                 <li>Inspire others with your spiritual journey</li>
             </ul>
 
             <p>Remember, your testimonies can strengthen someone else's faith and bring glory to God.</p>
 
-            <p><strong>"Give thanks to the LORD, for he is good; his love endures forever." - Psalm 107:1</strong></p>
+            <p>Thank you for joining us!</p>
             
-            <p>We look forward to reading your testimonies!</p>
+            <p>We look forward to reading your testimonies!</p> 
         </div>
-        <div class="footer">
-            <p>Grace Mountain Prayer Community</p>
+        <div class="footer"> 
             <p>This is an automated message, please do not reply to this email.</p>
         </div>
     </div>

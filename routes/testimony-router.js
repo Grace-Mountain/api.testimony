@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteTestimony, getAllTestimonies, postTestimony } from "../controllers/testimony-controller.js";
+import { deleteTestimony, getAllTestimonies, getTestimonyById, postTestimony } from "../controllers/testimony-controller.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
 // Create a router  
@@ -9,6 +9,8 @@ const testimonyRouter = Router();
 testimonyRouter.post("/testimony", isAuthenticated, postTestimony);
 
 testimonyRouter.get("/testimony", isAuthenticated, getAllTestimonies);
+
+testimonyRouter.get("/testimony/:id", isAuthenticated, getTestimonyById);
 
 testimonyRouter.delete("/testimony/:id", isAuthenticated, deleteTestimony);
 
