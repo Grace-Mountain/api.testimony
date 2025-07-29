@@ -12,7 +12,7 @@ await mongoose.connect(process.env.MONGO_URI)
 // Create an express app
 const app = express();
 
-// use middlewares
+// Use middlewares
 app.use(express.json());
 app.use(cors());
 
@@ -22,5 +22,5 @@ app.use(testimonyRouter);
 
 // Listen for inconming requests
 app.listen(2626, () => {
-    console.log("App listening on port 2626");  
+    console.log("App is listening on port 2626");  
 });

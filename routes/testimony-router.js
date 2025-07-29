@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { deleteTestimony, getAllTestimonies, getTestimonyById, postTestimony } from "../controllers/testimony-controller.js";
-import { isAuthenticated } from "../middlewares/auth.js";
+import { isAuthenticated, hasPermission } from "../middlewares/auth.js";
 
 // Create a router  
 const testimonyRouter = Router();
@@ -12,7 +12,7 @@ testimonyRouter.get("/testimony", isAuthenticated, getAllTestimonies);
 
 testimonyRouter.get("/testimony/:id", isAuthenticated, getTestimonyById);
 
-testimonyRouter.delete("/testimony/:id", isAuthenticated, deleteTestimony);
+testimonyRouter.delete("/testimonies/:id", isAuthenticated, hasPermission("delete_testimony"), deleteTestimony);
 
 // Export the router
 export default testimonyRouter; 

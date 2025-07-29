@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { mailTransporter } from "../utils/mail.js";
 import { userRegisterValidator, userLoginValidator } from "../validators/user-validator.js";
 
-// User register
+// Register a new user
 export const registerUser = async (req, res, next) => {
     try {
         // Validate user input
@@ -12,18 +12,18 @@ export const registerUser = async (req, res, next) => {
         if (error) {
             res.status(422).json(error);
         }
-        // check the database if the email exist already
+        // Check if user already exists
         const user = await UserModel.findOne({ email: value.email });
         if (user) {
             res.status(200).json("User already exists");
         }
         const hashedpassword = bcrypt.hashSync(value.password, 10);
-        // save to database
+        // Save user to database
         await UserModel.create({
             ...value,
             password: hashedpassword
         });
-        // Send email
+        // Send a confirmation email
         await mailTransporter.sendMail({
             from: process.env.EMAIL,
             to: value.email,
@@ -89,13 +89,14 @@ export const registerUser = async (req, res, next) => {
 </body>
 </html>`,
         });
+        // Respond to request
         res.status(201).json("User registered successfully!");
     } catch (error) {
         next(error);
     }
 }
 
-// User login
+// Login a user
 export const loginUser = async (req, res, next) => {
     try {
       // Validate user input
@@ -114,11 +115,11 @@ export const loginUser = async (req, res, next) => {
         return res.status(401).json
           ("Invalid credentials!");
       }
-      // sigm a token for user
+      // Sign a token for user
       const token = jwt.sign(
         { id: user.id }, process.env.JWT_PRIVATE_KEY, { expiresIn: "24h" }
       );
-      // respond to resquest
+      // Respond to resquest
       res.json({ message: "User logged in!", accessToken: token })
   
     } catch (error) {
