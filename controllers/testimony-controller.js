@@ -58,7 +58,7 @@ export const getAllTestimonies = async (req, res, next) => {
         }
         // Fetch testimonies from database 
         const testimonies = await TestimonyModel
-            .find(JSON.parse(filter))
+            .find(query)
             .sort(JSON.parse(sort))
             .limit(limit)
             .skip(skip);
@@ -70,10 +70,17 @@ export const getAllTestimonies = async (req, res, next) => {
 }
 
 // Get a testimony by ID
-export const getTestimonyById = async (req, res) => {
+export const getTestimonyById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const testimony = await TestimonyModel.findById(id);
+        let query = { _id: id };
+        
+        // Check if the user is an admin
+        if (req.auth.role !== "admin") {
+            query.approved = true;
+        }
+        
+        const testimony = await TestimonyModel.findOne(query);
         if (!testimony) {
             return res.status(404).json({
                 success: false,
