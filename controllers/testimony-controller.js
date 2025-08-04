@@ -31,15 +31,21 @@ export const approveTestimony = async (req, res, next) => {
         if (req.auth.role !== "admin") {
             return res.status(403).json("You do not have permission to approve this testimony!");
         }
-        const testimony = await TestimonyModel.findOneAndUpdate(req.params.id);
+        
+        // First, find the testimony to check if it's already approved
+        const testimony = await TestimonyModel.findById(req.params.id);
         if (!testimony) {
             return res.status(404).json("Testimony not found!");
         }
+        
         if (testimony.approved) {
             return res.status(400).json("Testimony is already approved!");
         }
+        
+        // Update the testimony to approved
         testimony.approved = true;
         await testimony.save();
+        
         // Respond to request
         res.status(200).json("Testimony approved!");
     } catch (error) {
