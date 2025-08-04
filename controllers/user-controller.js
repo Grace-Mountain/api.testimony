@@ -117,7 +117,7 @@ export const loginUser = async (req, res, next) => {
       }
       // Sign a token for user
       const token = jwt.sign(
-        { id: user.id }, process.env.JWT_PRIVATE_KEY, { expiresIn: "24h" }
+        { id: user.id, role: user.role }, process.env.JWT_PRIVATE_KEY, { expiresIn: "24h" }
       );
       // Respond to resquest
       res.json({ message: "User logged in!", accessToken: token })
