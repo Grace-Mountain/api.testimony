@@ -9,17 +9,17 @@ export const isAuthenticated = expressjwt({
 });
 
 // Middleware to check if user has permission
-export const hasPermission = (permission) => async (req, res, next) => {
+export const hasPermission = (requiredPermission) => async (req, res, next) => {
   try {
     // Find user from database
     const user = await UserModel.findById(req.auth.id);
     // Use the user role to find their permission
-    const permission = permissions.find(value => value.role === user.role);
-    if (!permission) {
+    const userPermission = permissions.find(value => value.role === user.role);
+    if (!userPermission) {
       return res.status(403).json("No permission found!");
     }
-    // Check if permission actions include action
-    if (permission.actions.includes(action)) {
+    // Check if permission actions include the required permission
+    if (userPermission.actions.includes(requiredPermission)) {
       next();
     } else {
       res.status(403).json("Action not allowed!");
