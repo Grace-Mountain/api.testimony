@@ -127,3 +127,18 @@ export const loginUser = async (req, res, next) => {
     }
   }
   
+  // Logout a user
+export const logoutUser = async (req, res, next) => {
+    try {
+        // Clear the JWT token from cookies if it exists
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        });
+        
+        res.status(200).json({ message: "User logged out successfully!" });
+    } catch (error) {
+        next(error);
+    }
+}
