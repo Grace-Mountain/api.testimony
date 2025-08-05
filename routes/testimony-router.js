@@ -14,7 +14,7 @@ testimonyRouter.get("/testimony/:id", isAuthenticated, getTestimonyById);
 
 testimonyRouter.patch("/testimony/:id/approve", isAuthenticated, hasPermission("approve_testimony"), approveTestimony);
 
-testimonyRouter.delete("/testimonies/:id", isAuthenticated, hasPermission("delete_testimony"), deleteTestimony);
+testimonyRouter.delete("/testimony/:id", isAuthenticated, hasPermission("delete_testimony"), deleteTestimony);
 
 // Export the router
 export default testimonyRouter; 
