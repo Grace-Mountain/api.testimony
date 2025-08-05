@@ -109,14 +109,8 @@ export const deleteTestimony = async (req, res, next) => {
         if (req.auth.role !== "admin") {
             return res.status(403).json("You do not have permission to delete this testimony!");
         }
-        // Find a testimony by id and delete it
-        const testimony = await TestimonyModel.
-            findOneAndDelete(
-                {
-                    _id: req.params.id,
-                    user: req.auth.id
-                }
-            );
+        // Find a testimony by id and delete it (admins can delete any testimony)
+        const testimony = await TestimonyModel.findByIdAndDelete(req.params.id);
         if (!testimony) {
             return res.status(404).json("Testimony not found!");
         }
