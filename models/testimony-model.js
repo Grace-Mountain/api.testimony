@@ -4,12 +4,12 @@ import { toJSON } from "@reis/mongoose-to-json";
 // Define testimony schema
 const testimonySchema = new Schema({
     content: { type: String, required: true },
-    image: { type: String, required: false },
+    media: { type: String, required: false },
     approved: { type: Boolean, default: false },
     user: { type: Types.ObjectId, required: true, ref: "User" },
 },
     {
-        timestamp: { type: Date, default: Date.now },
+        timestamps: true
     }
 );
 
