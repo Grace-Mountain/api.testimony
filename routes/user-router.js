@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { loginUser, registerUser, logoutUser } from "../controllers/user-controller.js";
+import { userAvatarUpload } from "../middlewares/upload.js";
 
 // Create a router
 const userRouter = Router();
 
 // Define routes
-userRouter.post("/users/register", registerUser);
+userRouter.post("/users/register", userAvatarUpload.single('avatar'), registerUser);
 
 userRouter.post("/users/login", loginUser);
 

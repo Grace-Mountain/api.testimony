@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { deleteTestimony, getAllTestimonies, getTestimonyById, postTestimony, approveTestimony } from "../controllers/testimony-controller.js";
+import { tesimonyMediaUpload } from "../middlewares/upload.js";
 import { isAuthenticated, hasPermission } from "../middlewares/auth.js";
 
 // Create a router  
 const testimonyRouter = Router();
 
 // Define routes
-testimonyRouter.post("/testimony", isAuthenticated, postTestimony);
+testimonyRouter.post("/testimony", isAuthenticated, tesimonyMediaUpload.single('media'), postTestimony);
 
 testimonyRouter.get("/testimony", isAuthenticated, getAllTestimonies);
 
